@@ -9,6 +9,9 @@ load_dotenv()
 
 # SBR_WEBDRIVER = os.getenv("SBR_WEBDRIVER")
 
+# define chuck_size constant for splitting the content
+CHUNK_SIZE = 8192
+
 
 def scrape_website(website):
     print("Connecting to Scraping Browser...")
@@ -16,6 +19,7 @@ def scrape_website(website):
     # with Remote(sbr_connection, options=ChromeOptions()) as driver:
     options = ChromeOptions()
     options.headless = True
+    # options.add_argument("--disable-gpu")  not needed
     driver = webdriver.Chrome(options=options)
     driver.get(website)
     # print("Waiting captcha to solve...")
@@ -55,7 +59,7 @@ def clean_body_content(body_content):
     return cleaned_content
 
 
-def split_dom_content(dom_content, max_length=6000):
+def split_dom_content(dom_content, max_length=CHUNK_SIZE):
     return [
         dom_content[i : i + max_length] for i in range(0, len(dom_content), max_length)
     ]

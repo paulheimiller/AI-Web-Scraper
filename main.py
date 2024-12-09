@@ -20,9 +20,11 @@ if st.button("Scrape Website"):
         dom_content = scrape_website(url)
         body_content = extract_body_content(dom_content)
         cleaned_content = clean_body_content(body_content)
-
+        # cleaned_content = body_content
         # Store the DOM content in Streamlit session state
         st.session_state.dom_content = cleaned_content
+        # print size of dom_content
+        st.write(f"Size of DOM Content: {len(cleaned_content)} characters")
 
         # Display the DOM content in an expandable text box
         with st.expander("View DOM Content"):
